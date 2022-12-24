@@ -13,6 +13,7 @@
     <description>lucene-2</description>
     <properties>
         <java.version>1.8</java.version>
+        <commons-lang3.version>3.9</commons-lang3.version>
     </properties>
 
 

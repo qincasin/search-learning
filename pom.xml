@@ -12,9 +12,10 @@
 <!--        <module>lucene</module>-->
         <module>lucene</module>
     </modules>
-
+    
     <properties>
-
+        <java.version>1.8</java.version>
+        <commons-lang3.version>3.9</commons-lang3.version>
     </properties>
 
 </project>

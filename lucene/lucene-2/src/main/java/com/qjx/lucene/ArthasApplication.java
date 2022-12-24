@@ -4,10 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class Lucene2Application {
+public class ArthasApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(Lucene2Application.class, args);
+        SpringApplication.run(ArthasApplication.class, args);
     }
 
 }

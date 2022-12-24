@@ -15,7 +15,7 @@
     </option>
     <option name="ignoredFiles">
       <set>
-        <option value="$PROJECT_DIR$/lucene/pom.xml" />
+        <option value="$PROJECT_DIR$/lucene/lucene-2/pom.xml" />
       </set>
     </option>
   </component>

@@ -1,0 +1,99 @@
+version: '2.2'
+services:
+  es01:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.9.3
+    container_name: es01
+    environment:
+      # 节点名称
+      - node.name=es01
+      # 集群名称
+      - cluster.name=es-docker-cluster
+      # 其他节点
+      - discovery.seed_hosts=es02,es03
+      # 配置一个或多个节点, 用于在es集群初始化时选举主节点master
+      - cluster.initial_master_nodes=es01,es02,es03
+      # 锁定内存地址
+      - bootstrap.memory_lock=true
+      # 设置java 堆内存地址
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - "~/code/docker/es/node01/data/:/usr/share/elasticsearch/data"
+      - "~/code/docker/es/node01/logs/:/usr/share/elasticsearch/logs"
+      - "~/code/docker/search/data/es/plugins/elasticsearch-analysis-ik-7.9.3:/usr/share/elasticsearch/plugins/elasticsearch-analysis-ik-7.9.3"
+    ports:
+      - 9200:9200
+    networks:
+      - elastic
+  es02:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.9.3
+    container_name: es02
+    environment:
+      - node.name=es02
+      - cluster.name=es-docker-cluster
+      - discovery.seed_hosts=es01,es03
+      - cluster.initial_master_nodes=es01,es02,es03
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - "~/code/docker/es/node02/data/:/usr/share/elasticsearch/data"
+      - "~/code/docker/es/node02/logs/:/usr/share/elasticsearch/logs"
+      - "~/code/docker/search/data/es/plugins/elasticsearch-analysis-ik-7.9.3:/usr/share/elasticsearch/plugins/elasticsearch-analysis-ik-7.9.3"
+    networks:
+      - elastic
+  es03:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.9.3
+    container_name: es03
+    environment:
+      - node.name=es03
+      - cluster.name=es-docker-cluster
+      - discovery.seed_hosts=es01,es02
+      - cluster.initial_master_nodes=es01,es02,es03
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - "~/code/docker/es/node03/data/:/usr/share/elasticsearch/data"
+      - "~/code/docker/es/node03/logs/:/usr/share/elasticsearch/logs"
+      - "~/code/docker/search/data/es/plugins/elasticsearch-analysis-ik-7.9.3:/usr/share/elasticsearch/plugins/elasticsearch-analysis-ik-7.9.3"
+    networks:
+      - elastic
+  kibana:
+    image: docker.elastic.co/kibana/kibana:7.9.3
+    container_name: kibana
+    ports:
+      - "5601:5601"
+    environment:
+      # es访问地址
+      ELASTICSEARCH_HOSTS: '["http://es01:9200","http://es02:9200","http://es03:9200"]'
+      # kibana语言配置：en、zh-CN、ja-JP
+      I18N_LOCALE: "zh-CN"
+    networks:
+      - elastic
+    depends_on:
+      - es01
+      - es02
+      - es03
+  cerebro:
+    image: lmenezes/cerebro:0.8.4
+    container_name: cerebro
+    ports:
+      - "9000:9000"
+    command:
+      - -Dhosts.0.host=http://es01:9200
+    networks:
+      - elastic
+
+networks:
+  elastic:
+    driver: bridge

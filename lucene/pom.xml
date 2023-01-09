@@ -12,7 +12,7 @@
     <artifactId>lucene</artifactId>
     <modules>
         <module>lucene-1</module>
-        <module>lucene-2</module>
+<!--        <module>lucene-2</module>-->
     </modules>
 
 

@@ -1,0 +1,25 @@
+server:
+  port: 8081
+
+elasticsearch:
+  host: 127.0.0.1
+  port: 9200
+
+datasource:
+  url: 127.0.0.1:3306
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://${datasource.url}/test_es
+    username: root
+    password: 123456
+    hikari:
+      maximum-pool-size: 10
+      max-lifetime: 1800000
+
+# mybatis ??
+mybatis:
+  type-aliases-package: com.qjx.es.entity # ????entity?
+  configuration:
+    map-underscore-to-camel-case: true # ???????????????user_id????????  userId ??

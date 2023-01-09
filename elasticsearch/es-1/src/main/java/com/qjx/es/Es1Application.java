@@ -1,4 +1,4 @@
-package com.qjx.lucene;
+package com.qjx.es;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

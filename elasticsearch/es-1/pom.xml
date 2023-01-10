@@ -8,7 +8,6 @@
         <groupId>com.qjx</groupId>
         <artifactId>elasticsearch</artifactId>
         <version>1.0-SNAPSHOT</version>
-        <relativePath/>
     </parent>
     
     <groupId>com.qjx</groupId>

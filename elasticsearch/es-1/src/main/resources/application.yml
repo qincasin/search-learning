@@ -18,8 +18,9 @@ spring:
       maximum-pool-size: 10
       max-lifetime: 1800000
 
-# mybatis ??
+# mybatis 配置
 mybatis:
-  type-aliases-package: com.qjx.es.entity # ????entity?
+  type-aliases-package: com.ymtxb.esbase.entity # 指定别名entity包
   configuration:
-    map-underscore-to-camel-case: true # ???????????????user_id????????  userId ??
+    map-underscore-to-camel-case: true # 开启驼峰命名规范，数据库表字段user_id自动匹配到实体类  userId 字段
+
